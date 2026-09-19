@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { resolve } from 'path';
 
 export default defineConfig({
   // Resolves the path aliases declared in tsconfig.json, including the ones
@@ -10,6 +9,5 @@ export default defineConfig({
     globals: true,
     root: './',
     include: ['**/*.spec.ts'],
-    setupFiles: [resolve(import.meta.dirname, './vitest.setup.ts')],
   },
 });
