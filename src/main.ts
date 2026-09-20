@@ -4,6 +4,7 @@ import { MyConfigService } from './config/config.service.js';
 import { MyValidationPipe } from './shared/utils/validate-dto.js';
 import { MyLogger } from './infrastructure/logger/logger.service.js';
 import { HttpExceptionFilter } from './infrastructure/http/http.filter.js';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,8 @@ async function bootstrap() {
   app.useLogger(new MyLogger());
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new MyValidationPipe());
+
+  app.use(cookieParser());
 
   await app.listen(port);
 }

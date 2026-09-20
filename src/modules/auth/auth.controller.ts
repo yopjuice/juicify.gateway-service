@@ -1,11 +1,12 @@
 import { Body, Controller, OnModuleInit, Post, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { ConfigService } from '@nestjs/config';
 import { AuthGrpc } from './auth.client.js';
 import type { GrpcToPromise } from '../../shared/types/index.js';
 import { AuthServiceClient, AuthTokensResponse  } from '@juice11-micro/contracts';
 import { LoginDto } from './dto/login.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
+import { UnauthenticatedError } from '../../shared/errors/domain-errors.js';
+import { MyConfigService } from '../../config/config.service.js';
 
 
 @Controller('auth')
@@ -14,7 +15,7 @@ export class AuthController implements OnModuleInit {
 
 	constructor(
     private readonly wrapper: AuthGrpc,
-		private readonly configService: ConfigService,
+		private readonly config: MyConfigService,
 	) {}
 
   onModuleInit() {
@@ -39,13 +40,13 @@ export class AuthController implements OnModuleInit {
 	async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<AuthTokensResponse> {
 
 		const token = req.cookies.refreshToken;
+    if (!token) throw new UnauthenticatedError();
 
 		const { accessToken, refreshToken} = await this.client.refreshTokens({ refreshToken: token });
 
 		res.cookie('refreshToken', refreshToken, {
 			httpOnly: true,
-			secure: this.configService.get('NODE_ENV') !== 'development',
-			domain: this.configService.getOrThrow<string>('COOKIES_DOMAIN'),
+			secure: false,
 			sameSite: 'lax',
 			maxAge: 30 * 24 * 60 * 60 * 1000
 		})
@@ -57,8 +58,7 @@ export class AuthController implements OnModuleInit {
 	public logout(@Res({ passthrough: true }) res: Response) {
 		res.cookie('refreshToken', '', {
 			httpOnly: true,
-			secure: this.configService.get('NODE_ENV') !== 'development',
-			domain: this.configService.getOrThrow<string>('COOKIES_DOMAIN'),
+			secure: false,
 			sameSite: 'lax',
 			maxAge: 0
 		});

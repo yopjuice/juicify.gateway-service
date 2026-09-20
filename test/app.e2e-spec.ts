@@ -2,6 +2,10 @@ import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app/app.module.js';
 import { INestApplication } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
+import { HttpExceptionFilter } from '../src/infrastructure/http/http.filter.js';
+import { MyLogger } from '../src/infrastructure/logger/logger.service.js';
+import { MyValidationPipe } from '../src/shared/utils/validate-dto.js';
 
 describe('App', () => {
   let app: INestApplication;
@@ -13,6 +17,11 @@ describe('App', () => {
       .compile();
 
     app = moduleRef.createNestApplication();
+    app.useLogger(new MyLogger());
+    app.useGlobalFilters(new HttpExceptionFilter());
+    app.useGlobalPipes(new MyValidationPipe());
+
+    app.use(cookieParser());
     await app.init();
   });
 
