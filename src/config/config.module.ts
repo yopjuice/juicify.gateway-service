@@ -1,7 +1,8 @@
 import { Global, Module } from '@nestjs/common';
 import { MyConfigService } from './config.service.js';
 import { ConfigModule } from '@nestjs/config';
-import { grpcEnv } from './env/grpc.env.js';
+import { httpEnv } from './env/http.env.js';
+import { authEnv } from './env/auth.env.js';
 
 // Making this module global to call service easier
 @Global()
@@ -10,7 +11,7 @@ import { grpcEnv } from './env/grpc.env.js';
     ConfigModule.forRoot({
       isGlobal: true,
       // Loads namespaces (e.x. database.url)
-      load: [grpcEnv ],
+      load: [authEnv, httpEnv],
     }),
   ],
   providers: [MyConfigService],

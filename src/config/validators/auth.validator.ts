@@ -1,9 +1,9 @@
 import { IsNumber, IsString } from 'class-validator';
 
-export class GrpcValidator {
+export class AuthValidator {
   @IsString()
-  GRPC_HOST: string;
+  AUTH_HOST: string;
 
   @IsNumber()
-  GRPC_PORT: number;
+  AUTH_PORT: number;
 }

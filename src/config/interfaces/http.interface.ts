@@ -1,4 +1,4 @@
-export interface GrpcConfig {
+export interface HttpConfig {
   port: number;
   host: string;
 }

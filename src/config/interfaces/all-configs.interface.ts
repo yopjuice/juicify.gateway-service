@@ -1,6 +1,7 @@
-import { GrpcConfig } from './grpc.interface.js';
+import { AuthConfig } from './auth.interface.js';
+import { HttpConfig } from './http.interface.js';
 
-// TODO: finish env
 export interface AllConfigs {
-  grpc: GrpcConfig;
+  auth: AuthConfig;
+  http: HttpConfig;
 }

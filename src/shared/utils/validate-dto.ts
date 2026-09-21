@@ -6,9 +6,9 @@ import * as grpc from '@grpc/grpc-js';
 import {Logger} from '@nestjs/common';
 
 @Injectable()
-export class GrpcValidationPipe implements PipeTransform<any> {
+export class MyValidationPipe implements PipeTransform<any> {
 
-  private readonly logger = new Logger(GrpcValidationPipe.name);
+  private readonly logger = new Logger(MyValidationPipe.name);
 
   async transform(value: any, { metatype }: ArgumentMetadata) {
     // Skip validation if there's no DTO metatype assigned to the payload
