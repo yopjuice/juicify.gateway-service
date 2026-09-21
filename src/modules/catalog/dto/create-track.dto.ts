@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-import { TrackStatus } from '../track.entity';
 
 export class CreateTrackDto {
   @IsString()
@@ -36,8 +35,8 @@ export class CreateTrackDto {
   @IsNotEmpty()
   coverUrl?: string;
 
-  @IsOptional()
-  @IsEnum(TrackStatus)
-  status?: TrackStatus;
-
+  // @IsOptional()
+  // @IsEnum(TrackStatus)
+  // status?: TrackStatus;
+  //
 }

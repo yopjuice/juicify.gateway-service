@@ -5,6 +5,10 @@ import { MyConfigService } from '../../config/config.service.js';
 import { grpcPackages, grpcProtoPaths } from '../../infrastructure/grpc/gprc.options.js';
 import { grpcClientInterceptor } from '../../infrastructure/grpc/grpc.client.interceptor.js';
 import { CatalogGrpc } from './catalog.client.js';
+import { TrackController } from './track.controller.js';
+import { AlbumController } from './album.controller.js';
+import { ArtistController } from './artist.controller.js';
+import { GenreController } from './genre.controller.js';
 
 @Module({
   imports: [
@@ -26,7 +30,14 @@ import { CatalogGrpc } from './catalog.client.js';
       },
     ]),
   ],
-  controllers: [CatalogController],
+  controllers: [
+    CatalogController,
+    TrackController,
+    AlbumController,
+    ArtistController,
+    GenreController,
+
+  ],
   providers: [CatalogGrpc],
 })
 export class CatalogModule { }

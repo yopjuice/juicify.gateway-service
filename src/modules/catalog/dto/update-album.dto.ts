@@ -1,7 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAlbumDto } from './create-album.dto';
-import { IsUUID } from 'class-validator';
-import type { CreateAlbumInput } from './create-album.dto';
+import { PartialType } from "@nestjs/mapped-types";
+import { IsUUID } from "class-validator";
+import { CreateAlbumDto, CreateAlbumInput } from "./create-album.dto.js";
 
 export class UpdateAlbumDto extends PartialType(CreateAlbumDto) {}
 

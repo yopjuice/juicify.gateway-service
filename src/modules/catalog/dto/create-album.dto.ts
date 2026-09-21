@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { IsDate, IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export const AlbumType = {
@@ -14,10 +13,9 @@ export class CreateAlbumDto {
   @IsNotEmpty()
   title: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
-  @Type(() => Date)
-  releaseDate?: Date;
+  releaseDate?: string;
 
   @IsString()
   @IsOptional()

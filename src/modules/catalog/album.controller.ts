@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { GrpcToPromise } from '../../shared/types/index.js';
-import { AlbumServiceClient } from '@juice11-micro/contracts';
+import { AlbumServiceClient  } from '@juice11-micro/contracts';
 import { CatalogGrpc } from './catalog.client.js';
-import type {CreateAlbumInput} from './dto/create-album.dto.js';
+import {CreateAlbumDto } from './dto/create-album.dto.js';
 import { UpdateAlbumDto } from './dto/update-album.dto.js';
 
 @Controller('/catalog/albums')
@@ -29,7 +29,7 @@ export class AlbumController {
   }
 
   @Post()
-  async create(@Body() body: CreateAlbumInput) {
+  async create(@Body() body: CreateAlbumDto) {
     return await this.client.createAlbum(body);
   }
 
@@ -41,5 +41,6 @@ export class AlbumController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteAlbum({ id });
+    return { ok: true };
   }
 }
