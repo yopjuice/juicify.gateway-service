@@ -1,6 +1,13 @@
 import { Type } from 'class-transformer';
-import { AlbumType } from '../album.entity';
 import { IsDate, IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+
+export const AlbumType = {
+  LP: 'LP',
+  EP: 'EP',
+  Single: 'SINGLE',
+} as const;
+
+export type AlbumType = typeof AlbumType[keyof typeof AlbumType];
 
 export class CreateAlbumDto {
   @IsString()

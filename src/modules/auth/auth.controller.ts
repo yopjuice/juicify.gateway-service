@@ -6,7 +6,6 @@ import { AuthServiceClient, AuthTokensResponse  } from '@juice11-micro/contracts
 import { LoginDto } from './dto/login.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { UnauthenticatedError } from '../../shared/errors/domain-errors.js';
-import { MyConfigService } from '../../config/config.service.js';
 
 
 @Controller('auth')
@@ -15,7 +14,6 @@ export class AuthController implements OnModuleInit {
 
 	constructor(
     private readonly wrapper: AuthGrpc,
-		private readonly config: MyConfigService,
 	) {}
 
   onModuleInit() {
