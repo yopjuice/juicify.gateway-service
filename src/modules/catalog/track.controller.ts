@@ -10,9 +10,9 @@ export class TrackController {
 
   private client: GrpcToPromise<TrackServiceClient>
 
-	constructor(
+  constructor(
     private readonly wrapper: CatalogGrpc,
-	) {}
+  ) { }
 
   onModuleInit() {
     this.client = this.wrapper.getClient('track');
@@ -41,5 +41,6 @@ export class TrackController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteTrack({ id });
+    return { ok: true }
   }
 }
