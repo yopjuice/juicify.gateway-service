@@ -10,9 +10,9 @@ export class ArtistController {
 
   private client: GrpcToPromise<ArtistServiceClient>
 
-	constructor(
+  constructor(
     private readonly wrapper: CatalogGrpc,
-	) {}
+  ) { }
 
   onModuleInit() {
     this.client = this.wrapper.getClient('artist');
@@ -41,5 +41,6 @@ export class ArtistController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteArtist({ id });
+    return { ok: true }
   }
 }

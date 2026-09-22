@@ -10,9 +10,9 @@ export class GenreController {
 
   private client: GrpcToPromise<GenreServiceClient>
 
-	constructor(
+  constructor(
     private readonly wrapper: CatalogGrpc,
-	) {}
+  ) { }
 
   onModuleInit() {
     this.client = this.wrapper.getClient('genre');
@@ -41,5 +41,6 @@ export class GenreController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteGenre({ id });
+    return { ok: true }
   }
 }
