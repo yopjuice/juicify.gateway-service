@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AuthController } from './auth.controller.js';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MyConfigService } from '../../config/config.service.js';
@@ -6,6 +6,7 @@ import { grpcPackages, grpcProtoPaths } from '../../infrastructure/grpc/gprc.opt
 import { grpcClientInterceptor } from '../../infrastructure/grpc/grpc.client.interceptor.js';
 import { AuthGrpc } from './auth.client.js';
 
+@Global()
 @Module({
   imports: [
     ClientsModule.registerAsync([
@@ -28,5 +29,6 @@ import { AuthGrpc } from './auth.client.js';
   ],
   controllers: [AuthController],
   providers: [AuthGrpc],
+  exports: [AuthGrpc],
 })
 export class AuthModule { }

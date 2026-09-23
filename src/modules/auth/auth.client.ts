@@ -1,5 +1,5 @@
 import { AuthServiceClient } from '@juice11-micro/contracts';
-import { Injectable, Inject, OnModuleInit, Logger } from '@nestjs/common';
+import { Injectable, Inject, OnModuleInit, Logger, Global } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { lastValueFrom, Observable } from 'rxjs';
 import { GrpcToPromise } from '../../shared/types/index.js';

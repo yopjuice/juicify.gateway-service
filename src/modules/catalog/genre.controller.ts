@@ -4,6 +4,7 @@ import { GenreServiceClient } from '@juice11-micro/contracts';
 import { CatalogGrpc } from './catalog.client.js';
 import { CreateGenreDto } from './dto/create-genre.dto.js';
 import { UpdateGenreDto } from './dto/update-genre.dto.js';
+import { UseRoles } from '../auth/decorators/use-roles.decorator.js';
 
 @Controller('/catalog/genres')
 export class GenreController {
@@ -28,16 +29,19 @@ export class GenreController {
     return await this.client.getGenre({ id });
   }
 
+  @UseRoles(['ADMIN'])
   @Post()
   async create(@Body() body: CreateGenreDto) {
     return await this.client.createGenre(body);
   }
 
+  @UseRoles(['ADMIN'])
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: UpdateGenreDto) {
     return await this.client.updateGenre({ id, ...body });
   }
 
+  @UseRoles(['ADMIN'])
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteGenre({ id });

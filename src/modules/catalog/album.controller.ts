@@ -4,6 +4,7 @@ import { AlbumServiceClient  } from '@juice11-micro/contracts';
 import { CatalogGrpc } from './catalog.client.js';
 import {CreateAlbumDto } from './dto/create-album.dto.js';
 import { UpdateAlbumDto } from './dto/update-album.dto.js';
+import { UseRoles } from '../auth/decorators/use-roles.decorator.js';
 
 @Controller('/catalog/albums')
 export class AlbumController {
@@ -28,16 +29,19 @@ export class AlbumController {
     return await this.client.getAlbum({ id });
   }
 
+  @UseRoles(['ADMIN'])
   @Post()
   async create(@Body() body: CreateAlbumDto) {
     return await this.client.createAlbum(body);
   }
 
+  @UseRoles(['ADMIN'])
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: UpdateAlbumDto) {
     return await this.client.updateAlbum({ id, ...body });
   }
 
+  @UseRoles(['ADMIN'])
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteAlbum({ id });

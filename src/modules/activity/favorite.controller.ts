@@ -4,6 +4,7 @@ import { ActivityGrpc } from './activity.client.js';
 import { Controller, Get, Query } from '@nestjs/common';
 import { CheckFavoriteDto } from './dto/check-favs.dto.js';
 import { GetFavoriteDto } from './dto/get-favs.dto.js';
+import { Auth } from '../auth/decorators/auth.decorator.js';
 
 @Controller('/activity/favorites')
 export class FavoriteController {
@@ -24,6 +25,7 @@ export class FavoriteController {
     return { results };
   }
 
+  @Auth()
   @Get()
   async getUserFavorite(@Query() data: GetFavoriteDto): Promise<GetUserFavoritesResponse> {
     const { itemIds } = await this.client.getUserFavorites(data);

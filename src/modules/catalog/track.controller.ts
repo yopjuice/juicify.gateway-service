@@ -4,6 +4,7 @@ import { TrackServiceClient } from '@juice11-micro/contracts';
 import { CatalogGrpc } from './catalog.client.js';
 import { CreateTrackDto } from './dto/create-track.dto.js';
 import { UpdateTrackDto } from './dto/update-track.dto.js';
+import { UseRoles } from '../auth/decorators/use-roles.decorator.js';
 
 @Controller('/catalog/tracks')
 export class TrackController {
@@ -28,16 +29,19 @@ export class TrackController {
     return await this.client.getTrack({ id });
   }
 
+  @UseRoles(['ADMIN'])
   @Post()
   async create(@Body() body: CreateTrackDto) {
     return await this.client.createTrack(body);
   }
 
+  @UseRoles(['ADMIN'])
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: UpdateTrackDto) {
     return await this.client.updateTrack({ id, ...body });
   }
 
+  @UseRoles(['ADMIN'])
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteTrack({ id });

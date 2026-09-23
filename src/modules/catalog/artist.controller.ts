@@ -4,6 +4,7 @@ import { ArtistServiceClient } from '@juice11-micro/contracts';
 import { CatalogGrpc } from './catalog.client.js';
 import { CreateArtistDto } from './dto/create-artist.dto.js';
 import { UpdateArtistDto } from './dto/update-artist.dto.js';
+import { UseRoles } from '../auth/decorators/use-roles.decorator.js';
 
 @Controller('/catalog/artists')
 export class ArtistController {
@@ -28,16 +29,19 @@ export class ArtistController {
     return await this.client.getArtist({ id });
   }
 
+  @UseRoles(['ADMIN'])
   @Post()
   async create(@Body() body: CreateArtistDto) {
     return await this.client.createArtist(body);
   }
 
+  @UseRoles(['ADMIN'])
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: UpdateArtistDto) {
     return await this.client.updateArtist({ id, ...body });
   }
 
+  @UseRoles(['ADMIN'])
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.client.deleteArtist({ id });
