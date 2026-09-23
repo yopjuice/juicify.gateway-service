@@ -1,10 +1,10 @@
-import { Controller, Get  } from '@nestjs/common';
+import { Controller, Get, Query  } from '@nestjs/common';
 import { GrpcToPromise } from '../../shared/types/index.js';
 import { GetUserActivityResponse, InteractionServiceClient } from '@juice11-micro/contracts';
 import { ActivityGrpc } from './activity.client.js';
 import { GetUserActivityDto } from './dto/get-activity.dto.js';
 
-@Controller('/catalog/interactions')
+@Controller('/activity/interactions')
 export class InteractionController {
 
   private client: GrpcToPromise<InteractionServiceClient>
@@ -18,7 +18,7 @@ export class InteractionController {
   }
 
   @Get()
-  async findByUser(data: GetUserActivityDto): Promise<GetUserActivityResponse> {
+  async findByUser(@Query() data: GetUserActivityDto): Promise<GetUserActivityResponse> {
     const { logs } = await this.client.getUserActivity(data);
     return { logs };
   }

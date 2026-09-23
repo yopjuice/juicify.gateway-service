@@ -1,10 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { GrpcToPromise } from '../../shared/types/index.js';
 import { GetTopItemsResponse, StatsServiceClient } from '@juice11-micro/contracts';
 import { ActivityGrpc } from './activity.client.js';
 import { TopItemsDto } from './dto/top-item.dto.js';
 
-@Controller('/catalog/statss')
+@Controller('/activity/stats')
 export class StatsController {
 
   private client: GrpcToPromise<StatsServiceClient>
@@ -18,7 +18,7 @@ export class StatsController {
   }
 
   @Get()
-  async getTopItems(data: TopItemsDto): Promise<GetTopItemsResponse> {
+  async getTopItems(@Query() data: TopItemsDto): Promise<GetTopItemsResponse> {
     const { items } = await this.client.getTopItems(data);
 
     return { items };
