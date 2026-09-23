@@ -1,4 +1,4 @@
-import { AlbumServiceClient, ArtistServiceClient, AuthServiceClient, CatalogServiceClient, GenreServiceClient, TrackServiceClient } from "@juice11-micro/contracts";
+import { AlbumServiceClient, ArtistServiceClient, AuthServiceClient, CatalogServiceClient, FavoritesServiceClient, GenreServiceClient, InteractionServiceClient, StatsServiceClient, TrackServiceClient } from "@juice11-micro/contracts";
 import { createClientMock } from "../../src/shared/utils/client.mock.js";
 
 export const authGrpcMock = createClientMock<AuthServiceClient>([
@@ -43,4 +43,19 @@ export const genreGrpcMock = createClientMock<GenreServiceClient>([
   'listGenres',
   'updateGenre',
   'deleteGenre',
-])
+]);
+
+export const interactionGrpcMock = createClientMock<InteractionServiceClient>([
+  'getUserActivity',
+]);
+
+
+export const favoriteGrpcMock = createClientMock<FavoritesServiceClient>([
+  'getUserFavorites',
+  'checkFavorites',
+]);
+
+
+export const statsGrpcMock = createClientMock<StatsServiceClient>([
+  'getTopItems',
+]);
