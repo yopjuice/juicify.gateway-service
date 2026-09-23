@@ -1,0 +1,54 @@
+name: NestJS Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    if: github.event.pull_request.draft == false
+    runs-on: local-ubuntu
+    environment: test
+    env:
+      HTTP_HOST: ${{ secrets.HTTP_HOST }}
+      HTTP_PORT: ${{ secrets.HTTP_PORT }}
+      AUTH_HOST: ${{ secrets.AUTH_HOST }}
+      AUTH_PORT: ${{ secrets.AUTH_PORT }}
+      CATALOG_HOST: ${{ secrets.CATALOG_HOST }}
+      CATALOG_PORT: ${{ secrets.CATALOG_PORT }}
+      ACTIVITY_HOST: ${{ secrets.ACTIVITY_HOST }}
+      ACTIVITY_PORT: ${{ secrets.ACTIVITY_PORT }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 11
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: |
+          rm -rf node_modules
+          pnpm store prune
+          pnpm install --frozen-lockfile
+          pnpm update @juice11-micro/contracts
+
+      # Compile code
+      - name: Build application
+        run: |
+          pnpm build
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Run e2e tests
+        run: pnpm test:e2e
