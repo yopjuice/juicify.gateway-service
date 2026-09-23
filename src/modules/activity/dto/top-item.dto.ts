@@ -11,5 +11,6 @@ export class TopItemsDto {
   limit: number;
 
   @IsNumber()
+  @Type(() => Number)
   daysAgo: number;
 }
