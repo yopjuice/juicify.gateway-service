@@ -1,4 +1,4 @@
-import { FavoritesServiceClient, InteractionServiceClient, StatsServiceClient } from '@juice11-micro/contracts';
+import { FAVORITES_SERVICE_NAME, FavoritesServiceClient, INTERACTION_SERVICE_NAME, InteractionServiceClient, STATS_SERVICE_NAME, StatsServiceClient } from '@juice11-micro/contracts';
 import { Injectable, Inject, OnModuleInit, Logger } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { lastValueFrom, Observable } from 'rxjs';
@@ -23,9 +23,9 @@ export class ActivityGrpc implements OnModuleInit {
 
   onModuleInit() {
     // Original gRPC service from Nest
-    this.rawServices.favorite = this.grpcClient.getService<FavoritesServiceClient>('FavoriteService');
-    this.rawServices.interaction = this.grpcClient.getService<InteractionServiceClient>('InteractionService');
-    this.rawServices.stats = this.grpcClient.getService<StatsServiceClient>('StatsService');
+    this.rawServices.favorite = this.grpcClient.getService<FavoritesServiceClient>(FAVORITES_SERVICE_NAME);
+    this.rawServices.interaction = this.grpcClient.getService<InteractionServiceClient>(INTERACTION_SERVICE_NAME);
+    this.rawServices.stats = this.grpcClient.getService<StatsServiceClient>(STATS_SERVICE_NAME);
   }
 
   getClient<T extends EntityType>(entity: T): GrpcToPromise<RawServices[T]> {
